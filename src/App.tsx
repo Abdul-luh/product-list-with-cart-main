@@ -3,9 +3,12 @@ import "./App.css";
 import desserts from "@/../data.json";
 import DessertCard from "./components/DessertCard";
 import { useState } from "react";
+import OrderTotal from "./components/OrderTotal";
+import { Button } from "@/components/ui/button";
 
 function App() {
   const [cartItems, setCartItems] = useState<Record<string, number>>({});
+  const [confirmOrder, setConfirmOrder] = useState(false);
 
   // Calculate total items in cart
   const totalItems = Object.values(cartItems).reduce(
@@ -28,6 +31,75 @@ function App() {
   return (
     <main className="flex flex-col p-2 md:p-4 bg-rose-50 min-h-screen w-full">
       <div className="flex flex-col gap-4 sm:flex-row max-w-[1200px] w-full mx-auto">
+        {/* Confirm Order  */}
+        {confirmOrder && (
+          <div className="fixed inset-0 bg-rose-900/40  flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+              <img
+                className=""
+                src="/assets/images/icon-order-confirmed.svg"
+                alt="order-confirmed"
+              />{" "}
+              <h2 className="text-2xl font-bold text-black my-4">
+                Order Confirmed
+              </h2>
+              <p className="text-rose-400 mb-4 pb-4">
+                We hope you enjoy your food!
+              </p>
+              <div className="bg-rose-50 p-4 rounded-xl my-4">
+                {Object.entries(cartItems).map(([name, quantity]) => {
+                  const dessert = desserts.find((d) => d.name === name);
+                  if (!dessert) return null;
+
+                  const total = dessert.price * quantity;
+
+                  return (
+                    <div
+                      key={name}
+                      className="flex justify-between items-center border-b p-3 rounded-xl"
+                    >
+                      <div className="flex items-center">
+                        <img
+                          className="w-16 h-16 object-cover rounded-lg mr-4"
+                          src={dessert.image.thumbnail}
+                          alt={dessert.name}
+                        />
+                        <div>
+                          <h4 className="font-semibold text-xl text-rose-900">
+                            {name}
+                          </h4>
+                          <div className="flex gap-2">
+                            <p className="text-lg text-red font-bold">
+                              {quantity}x
+                            </p>
+                            <p className="text-lg text-rose-500">
+                              @ ${dessert.price.toFixed(2)}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-lg font-semibold text-rose-900 ">
+                        ${total.toFixed(2)}
+                      </p>
+                    </div>
+                  );
+                })}
+                {/* Order Total */}
+                <OrderTotal cartItems={cartItems} desserts={desserts} />
+              </div>
+              <Button
+                onClick={() => {
+                  setCartItems({});
+                  setConfirmOrder(false);
+                }}
+                className="w-full mt-4 bg-red hover:bg-red-800"
+              >
+                Start New Order
+              </Button>
+            </div>
+          </div>
+        )}
+
         {/* Desserts Section */}
         <section className="basis-5/7">
           <h1 className="font-redhat font-bold text-2xl text-rose-900">
@@ -82,35 +154,23 @@ function App() {
                           </p>
                         </div>
                       </div>
-                      <button
+                      <Button
+                        variant="outline"
+                        size="icon"
                         onClick={() => handleQuantityChange(name, 0)}
-                        className="w-7 h-7 flex justify-center items-center text-red-600 text-sm border border-rose-400 rounded-full hover:bg-red-50"
+                        className="w-7 h-7 p-1 border-rose-400 text-red-600 hover:bg-red-50 rounded-full"
                       >
                         <img
-                          className=""
                           src="/assets/images/icon-remove-item.svg"
                           alt="empty-cart"
-                        />{" "}
-                      </button>
+                        />
+                      </Button>
                     </div>
                   );
                 })}
 
                 {/* Order Total */}
-                <div className="flex justify-between items-center mt-4 pt-4">
-                  <span className="font-semibold text-lg text-rose-900">
-                    Order Total
-                  </span>
-                  <span className="font-bold text-lg text-rose-900">
-                    $
-                    {Object.entries(cartItems)
-                      .reduce((sum, [name, quantity]) => {
-                        const dessert = desserts.find((d) => d.name === name);
-                        return dessert ? sum + dessert.price * quantity : sum;
-                      }, 0)
-                      .toFixed(2)}
-                  </span>
-                </div>
+                <OrderTotal cartItems={cartItems} desserts={desserts} />
 
                 <div className="flex justify-center gap-4 items-center mt-4 bg-rose-50 p-4 rounded-xl">
                   <img
@@ -126,9 +186,12 @@ function App() {
                 </div>
 
                 <div className="text-center mt-6">
-                  <button className="bg-red w-full text-white px-6 py-2 rounded-full hover:bg-red-800 transition-colors">
+                  <Button
+                    onClick={() => setConfirmOrder(true)}
+                    className="w-full bg-red hover:bg-red-800"
+                  >
                     Confirm Order
-                  </button>
+                  </Button>
                 </div>
               </>
             ) : (

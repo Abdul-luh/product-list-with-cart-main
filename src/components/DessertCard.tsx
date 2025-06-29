@@ -1,5 +1,7 @@
 // components/DessertCard.tsx
 import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Plus, Minus } from "lucide-react";
 
 interface DessertCardPropsIface {
   item: DessertItemIface;
@@ -64,21 +66,26 @@ export default function DessertCard({
       <div className="p-4 flex flex-col gap-2 flex-grow relative">
         <AnimatePresence mode="wait">
           {!isAdded ? (
-            <motion.button
+            <motion.div
               key="add-button"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.3 }}
-              onClick={handleAddToCart}
-              className="absolute -top-4 left-1/2 -translate-x-1/2 bg-white flex items-center justify-center gap-2 border rounded-full shadow-2xl text-sm font-medium text-neutral-800 hover:text-red hover:border-red w-max px-6 py-3"
+              className="absolute -top-4 left-1/2 -translate-x-1/2"
             >
-              <img
-                src="/assets/images/icon-add-to-cart.svg"
-                alt="add-to-cart"
-              />
-              <p>Add to Cart</p>
-            </motion.button>
+              <Button
+                onClick={handleAddToCart}
+                variant="outline"
+                className="flex items-center gap-2 border text-sm shadow-2xl"
+              >
+                <img
+                  src="/assets/images/icon-add-to-cart.svg"
+                  alt="add-to-cart"
+                />
+                <span>Add to Cart</span>
+              </Button>
+            </motion.div>
           ) : (
             <motion.div
               key="quantity-control"
@@ -88,27 +95,27 @@ export default function DessertCard({
               transition={{ duration: 0.3 }}
               className="absolute -top-4 left-1/2 -translate-x-1/2 px-3 flex gap-3 items-center justify-between bg-red rounded-full shadow-2xl overflow-hidden"
             >
-              <button
+              <Button
                 onClick={decrement}
-                className="py-2 px-1 w-5 h-5 text-white border border-white rounded-full"
+                size="icon"
+                variant="ghost"
+                className="w-7 h-7 border border-white text-white hover:text-red rounded-full"
               >
-                <img
-                  src="/assets/images/icon-decrement-quantity.svg"
-                  alt="decrement"
-                />
-              </button>
+                <Minus size={14} />
+              </Button>
+
               <span className="px-4 py-3 text-white font-medium">
                 {quantity}
               </span>
-              <button
+
+              <Button
                 onClick={increment}
-                className="p-1 w-5 h-5 text-white border border-white rounded-full"
+                size="icon"
+                variant="ghost"
+                className="w-7 h-7 border border-white text-white hover:text-red rounded-full"
               >
-                <img
-                  src="/assets/images/icon-increment-quantity.svg"
-                  alt="increment"
-                />
-              </button>
+                <Plus size={14} />
+              </Button>
             </motion.div>
           )}
         </AnimatePresence>

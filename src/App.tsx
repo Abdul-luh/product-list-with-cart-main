@@ -14,10 +14,15 @@ function App() {
   );
 
   const handleQuantityChange = (itemName: string, quantity: number) => {
-    setCartItems((prev) => ({
-      ...prev,
-      [itemName]: quantity,
-    }));
+    setCartItems((prev) => {
+      const updated = { ...prev };
+      if (quantity <= 0) {
+        delete updated[itemName];
+      } else {
+        updated[itemName] = quantity;
+      }
+      return updated;
+    });
   };
 
   return (
@@ -33,6 +38,7 @@ function App() {
               <DessertCard
                 key={dessert.name}
                 item={dessert}
+                quantity={cartItems[dessert.name] || 0}
                 onQuantityChange={(quantity) =>
                   handleQuantityChange(dessert.name, quantity)
                 }
@@ -106,8 +112,21 @@ function App() {
                   </span>
                 </div>
 
+                <div className="flex justify-center gap-4 items-center mt-4 bg-rose-50 p-4 rounded-xl">
+                  <img
+                    className=""
+                    src="/assets/images/icon-carbon-neutral.svg"
+                    alt="empty-cart"
+                  />{" "}
+                  <p className="text-rose-900 text-sm">
+                    This is a
+                    <span className="font-semibold">carbon-neutral</span>{" "}
+                    delivery
+                  </p>
+                </div>
+
                 <div className="text-center mt-6">
-                  <button className="bg-red text-white px-6 py-2 rounded-full hover:bg-rose-500 transition-colors">
+                  <button className="bg-red w-full text-white px-6 py-2 rounded-full hover:bg-red-800 transition-colors">
                     Confirm Order
                   </button>
                 </div>
@@ -119,7 +138,9 @@ function App() {
                   src="/assets/images/illustration-empty-cart.svg"
                   alt="empty-cart"
                 />
-                <p className="text-neutral-500">Your cart is empty.</p>
+                <p className="text-rose-500">
+                  Your added items will appear here.
+                </p>
               </div>
             )}
           </div>

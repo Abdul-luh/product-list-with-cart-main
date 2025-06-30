@@ -1,6 +1,6 @@
 # Frontend Mentor - Product list with cart solution
 
-This is a solution to the [Product list with cart challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/product-list-with-cart-5MmqLVAp_d). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+This is a solution to the [Product list with cart challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/product-list-with-cart-5MmqLVAp_d). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
 ## Table of contents
 
@@ -35,18 +35,14 @@ Users should be able to:
 
 ![](./screenshot.jpg)
 
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
+This a screenshot of my solution.
 
 **Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Github repo](https://github.com/Abdul-luh/product-list-with-cart-main)
+- Live Site URL: [demo site](https://product-list-with-cart-main-indol.vercel.app/)
 
 ## My process
 
@@ -58,29 +54,104 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 - CSS Grid
 - Mobile-first workflow
 - [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
+- [vite](https://nextjs.org/) - React framework
+- [typescript](https://nextjs.org/) - React framework
+- [tailwindcss](https://tailwindcss.com/) - React framework
+- [framer-motion](https://nextjs.org/) - React framework
+- [lucid-react](https://nextjs.org/) - React framework
+- [Shadcn Components](https://ui.shadcn.com/) - For styles
+- [vercel](https://vercel.com/) - For deployment
 
 **Note: These are just examples. Delete this note and replace the list above with your own choices**
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+I tried learning useReducer but this project made me get a hang of it and it is what I used to handle all my cart items
 
 To see how you can add code snippets, see below:
 
-```html
-<h1>Some HTML code I'm proud of</h1>
+```tsx
+// created the state
+const [cartItems, setCartItems] = useState<Record<string, number>>({});
 ```
-```css
-.proud-of-this-css {
-  color: papayawhip;
+
+```tsx
+// Calculate total items in cart
+const totalItems = Object.values(cartItems).reduce(
+  (sum, quantity) => sum + quantity,
+  0
+);
+```
+
+and handled most things from that knowledge
+
+```tsx
+// components/OrderTotal.tsx
+type OrderTotalProps = {
+  cartItems: Record<string, number>;
+  desserts: { name: string; price: number }[];
+};
+
+export default function OrderTotal({ cartItems, desserts }: OrderTotalProps) {
+  const total = Object.entries(cartItems).reduce((sum, [name, quantity]) => {
+    const dessert = desserts.find((d) => d.name === name);
+    return dessert ? sum + dessert.price * quantity : sum;
+  }, 0);
+
+  return (
+    <div className="flex justify-between items-center mt-4 pt-4">
+      <span className="font-semibold text-lg text-rose-900">Order Total</span>
+      <span className="font-bold text-lg text-rose-900">
+        ${total.toFixed(2)}
+      </span>
+    </div>
+  );
 }
 ```
+
+created font variable from the available font in the starter file
+
+```css
+font-face {
+  font-family: "RedHatText";
+  src: url("/fonts/static/RedHatText-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "RedHatText";
+  src: url("/fonts/static/RedHatText-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+/* ... */
+```
+
+used the tailwinds latest method of setting up variables
+
+```css
+@theme {
+  /* Custom font */
+  --font-redhat: "RedHatText", sans-serif;
+
+  /* Custom Solid Colors */
+  --color-red: hsl(14, 86%, 42%);
+  --color-green: hsl(159, 69%, 38%);
+
+  /* Rose Scale */
+  --color-rose-50: hsl(20, 50%, 98%);
+  --color-rose-100: hsl(13, 31%, 94%);
+  --color-rose-300: hsl(14, 25%, 72%);
+  --color-rose-400: hsl(7, 20%, 60%);
+  --color-rose-500: hsl(12, 20%, 44%);
+  --color-rose-900: hsl(14, 65%, 9%);
+}
+```
+
 ```js
 const proudOfThisFunc = () => {
-  console.log('🎉')
-}
+  console.log("🎉");
+};
 ```
 
 If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
@@ -89,22 +160,21 @@ If you want more help with writing markdown, we'd recommend checking out [The Ma
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+I would like to build more UI's with animation, working with actual backend a sending and retrieving data from backend, building realtime data applications and online payment application, but most of all, know how the professional work really is and make something that solves problems
 
 **Note: Delete this note and the content within this section and replace with your own plans for continued development.**
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+- [chatgpt](https://chatgpt.com/) - This helped me explain some concepts I never really understood. I really liked this pattern and will use it going forward.
+- [DeepSeek AI](https://chat.deepseek.com/) - This is an amazing AI tool which helped me finally understand useRducer and compartmentalization of components. I'd recommend it to anyone still learning this concept.
 
 **Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
+- Frontend Mentor - [@abdul-luh](https://www.frontendmentor.io/profile/abdul-luh)
+- Twitter - [@abdullah_odulate](https://www.twitter.com/@_abdullah_odulate)
 
 **Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
 

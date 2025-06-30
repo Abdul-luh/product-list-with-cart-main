@@ -99,7 +99,7 @@ export default function DessertCard({
                 onClick={decrement}
                 size="icon"
                 variant="ghost"
-                className="w-5 h-5 border border-white text-white hover:text- rounded-full"
+                className="w-5 h-5 border border-white text-white hover:text-red  rounded-full"
               >
                 <Minus size={14} />
               </Button>
@@ -110,7 +110,7 @@ export default function DessertCard({
                 onClick={increment}
                 size="icon"
                 variant="ghost"
-                className="w-5 h-5 border border-white text-white hover:text- rounded-full"
+                className="w-5 h-5 border border-white text-white hover:text-red rounded-full"
               >
                 <Plus size={14} />
               </Button>

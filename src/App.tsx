@@ -93,7 +93,7 @@ function App() {
                   setCartItems({});
                   setConfirmOrder(false);
                 }}
-                className="w-full mt-4 bg-red hover:bg-red-800"
+                className="w-full mt-4 bg-red hover:bg-red-800 rounded-full"
               >
                 Start New Order
               </Button>
@@ -186,7 +186,7 @@ function App() {
                 <div className="text-center mt-6">
                   <Button
                     onClick={() => setConfirmOrder(true)}
-                    className="w-full bg-red hover:bg-red-800"
+                    className="w-full bg-red hover:bg-red-800 rounded-full"
                   >
                     Confirm Order
                   </Button>

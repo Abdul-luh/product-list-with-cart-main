@@ -5,6 +5,7 @@ import DessertCard from "./components/DessertCard";
 import { useState } from "react";
 import OrderTotal from "./components/OrderTotal";
 import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 function App() {
   const [cartItems, setCartItems] = useState<Record<string, number>>({});
@@ -160,10 +161,7 @@ function App() {
                         onClick={() => handleQuantityChange(name, 0)}
                         className="w-7 h-7 p-1 border-rose-400 text-red-600 hover:bg-red-50 rounded-full"
                       >
-                        <img
-                          src="/assets/images/icon-remove-item.svg"
-                          alt="empty-cart"
-                        />
+                        <X className="w-4 h-4" />
                       </Button>
                     </div>
                   );

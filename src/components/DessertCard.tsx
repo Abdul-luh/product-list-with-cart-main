@@ -77,7 +77,7 @@ export default function DessertCard({
               <Button
                 onClick={handleAddToCart}
                 variant="outline"
-                className="flex items-center gap-2 border text-sm shadow-2xl"
+                className="flex items-center gap-2 border text-lg rounded-full px-6 py-2 shadow-2xl"
               >
                 <img
                   src="/assets/images/icon-add-to-cart.svg"
@@ -93,26 +93,24 @@ export default function DessertCard({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.3 }}
-              className="absolute -top-4 left-1/2 -translate-x-1/2 px-3 flex gap-3 items-center justify-between bg-red rounded-full shadow-2xl overflow-hidden"
+              className="absolute -top-4 left-1/2 -translate-x-1/2 flex gap-6 items-center justify-between bg-red rounded-full shadow-2xl overflow-hidden px-3 py-2"
             >
               <Button
                 onClick={decrement}
                 size="icon"
                 variant="ghost"
-                className="w-7 h-7 border border-white text-white hover:text- rounded-full"
+                className="w-5 h-5 border border-white text-white hover:text- rounded-full"
               >
                 <Minus size={14} />
               </Button>
 
-              <span className="px-4 py-3 text-white font-medium">
-                {quantity}
-              </span>
+              <span className=" text-white font-medium">{quantity}</span>
 
               <Button
                 onClick={increment}
                 size="icon"
                 variant="ghost"
-                className="w-7 h-7 border border-white text-white hover:text- rounded-full"
+                className="w-5 h-5 border border-white text-white hover:text- rounded-full"
               >
                 <Plus size={14} />
               </Button>
